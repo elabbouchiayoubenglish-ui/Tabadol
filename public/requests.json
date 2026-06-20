@@ -1,0 +1,96 @@
+[
+  {
+    "id": 1781755737822,
+    "cycle": "الثانوي الإعدادي",
+    "subject": "اللغة الإنجليزية",
+    "name": "أيوب ",
+    "curSchool": "انس بن مالك ",
+    "createdAt": "2026-06-18T04:08:57.822Z"
+  },
+  {
+    "id": 1781755737830,
+    "cycle": "الثانوي الإعدادي",
+    "subject": "اللغة الإنجليزية",
+    "name": "أيوب ",
+    "curSchool": "انس بن مالك ",
+    "createdAt": "2026-06-18T04:08:57.830Z"
+  },
+  {
+    "id": 1781755768587,
+    "cycle": "الثانوي الإعدادي",
+    "subject": "اللغة الإنجليزية",
+    "name": "أيوب ",
+    "curSchool": "انس بن مالك ",
+    "createdAt": "2026-06-18T04:09:28.587Z"
+  },
+  {
+    "id": 1781768539861,
+    "name": "محمد البشيري ",
+    "phone": "0666326786",
+    "cycle": "الثانوي التأهيلي",
+    "subject": "اللغة الإنجليزية",
+    "curSchool": "prince  MOULAY RaCHID",
+    "targetSchool": "Lycée Qualifiant Technique",
+    "createdAt": "2026-06-18T07:42:19.862Z"
+  },
+  {
+    "id": 1781770249575,
+    "name": "حمزة بن خلوق",
+    "phone": "0670541232",
+    "cycle": "الابتدائي",
+    "subject": "اللغة العربية",
+    "curSchool": "KADI AYAD",
+    "targetSchool": "CENTRE TAHRMOUCHT",
+    "createdAt": "2026-06-18T08:10:49.575Z"
+  },
+  {
+    "id": 1781773453006,
+    "name": "خالد العمطيوي",
+    "phone": "0749236523",
+    "cycle": "الثانوي التأهيلي",
+    "subject": "اللغة الإنجليزية",
+    "curSchool": "ANASS BEN MALEK",
+    "targetSchool": "LYCEE QUALIFIANT AHMED IDRISSI",
+    "createdAt": "2026-06-18T09:04:13.006Z"
+  },
+  {
+    "id": 1781773453014,
+    "name": "خالد العمطيوي",
+    "phone": "0749236523",
+    "cycle": "الثانوي التأهيلي",
+    "subject": "اللغة الإنجليزية",
+    "curSchool": "ANASS BEN MALEK",
+    "targetSchool": "LYCEE QUALIFIANT AHMED IDRISSI",
+    "createdAt": "2026-06-18T09:04:13.014Z"
+  },
+  {
+    "id": 1781774699747,
+    "name": "ابراهيم عبدالله ",
+    "phone": "0651237787",
+    "cycle": "الابتدائي",
+    "subject": "مزدوج",
+    "curSchool": "DAYA",
+    "targetSchool": "SIBAOUIH",
+    "createdAt": "2026-06-18T09:24:59.748Z"
+  },
+  {
+    "id": 1781774699861,
+    "name": "ابراهيم عبدالله ",
+    "phone": "0651237787",
+    "cycle": "الابتدائي",
+    "subject": "مزدوج",
+    "curSchool": "DAYA",
+    "targetSchool": "SIBAOUIH",
+    "createdAt": "2026-06-18T09:24:59.861Z"
+  },
+  {
+    "id": 1781776891589,
+    "name": "",
+    "phone": "",
+    "cycle": "الابتدائي",
+    "subject": "مزدوج",
+    "curSchool": "ECOLE AL WAFA",
+    "targetSchool": "OMAR IBN KHATAB",
+    "createdAt": "2026-06-18T10:01:31.589Z"
+  }
+]

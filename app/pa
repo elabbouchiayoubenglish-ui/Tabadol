@@ -1,0 +1,9 @@
+export default function Home() {
+  return (
+    <main>
+      <h1>مرحبا بكم في منصة تبادل Tabadol</h1>
+      <p>منصة التبادل الوطني والجهوي والمحلي للأساتذة.</p>
+    </main>
+  );
+}
+
