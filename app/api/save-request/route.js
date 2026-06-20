@@ -1,20 +1,3 @@
-import { supabase } from '@/lib/supabase'
-
-// GET - جلب الطلبات من Supabase
-export async function GET() {
-  const { data, error } = await supabase
-    .from('requests')
-    .select('*')
-    .order('created_at', { ascending: false })
-
-  if (error) {
-    return Response.json({ error: error.message }, { status: 500 })
-  }
-
-  return Response.json(data)
-}
-
-// POST - حفظ طلب جديد
 export async function POST(req) {
   try {
     const body = await req.json()
@@ -25,29 +8,27 @@ export async function POST(req) {
       level,
       subject,
       current_region,
-      current_direction,
+      current_directorate,
       current_school,
       desired_region,
-      desired_direction,
+      desired_directorate,
       desired_school
     } = body
 
     const { data, error } = await supabase
       .from('requests')
-      .insert([
-        {
-          full_name,
-          phone,
-          level,
-          subject,
-          current_region,
-          current_direction,
-          current_school,
-          desired_region,
-          desired_direction,
-          desired_school
-        }
-      ])
+      .insert([{
+        full_name,
+        phone,
+        level,
+        subject,
+        current_region,
+        current_directorate,
+        current_school,
+        desired_region,
+        desired_directorate,
+        desired_school
+      }])
       .select()
 
     if (error) {
