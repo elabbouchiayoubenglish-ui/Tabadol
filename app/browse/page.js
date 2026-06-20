@@ -20,29 +20,35 @@ export default function BrowseRequests() {
   // 🔥 تحديث تلقائي كل 5 ثواني
   useEffect(() => {
 
-    const fetchData = () => {
-      fetch('/api/save-request')
-        .then(res => res.json())
-        .then(data => {
+const fetchData = async () => {
+  try {
+    const res = await fetch('/api/save-request');
+    const data = await res.json();
 
-          const sorted = (data || []).sort(
-            (a, b) => new Date(b.created_at) - new Date(a.created_at)
-          );
+    console.log("DATA FROM API:", data);
 
-          setRequests(sorted);
+    const safeData = Array.isArray(data) ? data : [];
 
-          const savedStatus = {};
+    const sorted = safeData.sort(
+      (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    );
 
-          sorted.forEach((req) => {
-            if (req.status) {
-              savedStatus[req.id] = req.status;
-            }
-          });
+    setRequests(sorted);
 
-          setStatusMap(savedStatus);
-        });
-    };
+    const savedStatus = {};
 
+    sorted.forEach((req) => {
+      if (req.status) {
+        savedStatus[req.id] = req.status;
+      }
+    });
+
+    setStatusMap(savedStatus);
+
+  } catch (err) {
+    console.log("FETCH ERROR:", err);
+  }
+};
     fetchData(); // أول تحميل
 
     const interval = setInterval(fetchData, 5000); // كل 5 ثواني
