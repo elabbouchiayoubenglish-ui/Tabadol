@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { auth } from './firebase.js';
+import { auth } from '../firebase';
 import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import Link from 'next/link';
 
@@ -18,7 +18,11 @@ export default function Home() {
 
   const handleLogin = async () => {
     const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
+    try {
+      await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error("Error signing in: ", error);
+    }
   };
 
   if (loading) return <div style={{ textAlign: 'center', marginTop: '50px' }}>جاري التحقق...</div>;
