@@ -28,17 +28,20 @@ export async function POST(req) {
       .from('requests')
       .insert([
         {
-          full_name: body.full_name,
+          full_name: body.name,
           phone: body.phone,
-          level: body.level,
+          level: body.cycle,
           subject: body.subject,
-          current_region: body.current_region,
-          current_directorate: body.current_directorate,
-          current_school: body.current_school,
-          desired_region: body.desired_region,
-          desired_directorate: body.desired_directorate,
-          desired_school: body.desired_school,
-          created_at: new Date()
+
+          current_region: body.region,
+          current_directorate: body.directorate,
+          current_school: body.curSchool,
+
+          desired_region: body.targetRegion,
+          desired_directorate: body.targetDirectorate,
+          desired_school: body.targetSchool,
+
+          created_at: new Date().toISOString()
         }
       ])
       .select()
@@ -47,9 +50,15 @@ export async function POST(req) {
       return Response.json({ error: error.message }, { status: 500 })
     }
 
-    return Response.json({ success: true, data: data[0] })
+    return Response.json({
+      success: true,
+      data: data[0]
+    })
 
   } catch (err) {
-    return Response.json({ error: err.message }, { status: 500 })
+    return Response.json(
+      { error: err.message },
+      { status: 500 }
+    )
   }
 }
