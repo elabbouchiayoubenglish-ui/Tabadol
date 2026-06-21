@@ -4,10 +4,6 @@ const nextConfig = {
     config.watchOptions = { ignored: /.*/ };
     return config;
   },
-  // إضافة هذا السطر يحل تعارض Turbopack
-  experimental: {
-    turbopack: {}
-  }
 };
 
 module.exports = nextConfig;
