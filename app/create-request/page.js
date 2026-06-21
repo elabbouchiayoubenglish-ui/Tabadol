@@ -51,38 +51,33 @@ export default function CreateRequest() {
     targetRaw?.[cycleMap[selectedCycle]] || [];
 
   // ✅ التصحيح الكامل هنا
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    await fetch('/api/save-request', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: formData.name,
-        phone: formData.phone,
-        cycle: formData.cycle,
-        subject: formData.subject,
+  await fetch('/api/save-request', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: formData.name,
+      phone: formData.phone,
+      cycle: formData.cycle,
+      subject: formData.subject,
 
-        // الحالي
-        region: selectedRegion,
-        directorate: selectedDirectorate,
-        curSchool: formData.curSchool,
+      region: selectedRegion,
+      directorate: selectedDirectorate,
+      curSchool: formData.curSchool,
 
-        // المطلوب
-        targetRegion: targetRegion,
-        targetDirectorate: targetDirectorate,
-        targetSchool: formData.targetSchool,
+      targetRegion: targetRegion,
+      targetDirectorate: targetDirectorate,
+      targetSchool: formData.targetSchool
+    })
+  });
 
-        createdAt: new Date().toISOString()
-      })
-    });
-
-    alert('تم حفظ الطلب بنجاح');
-    router.push('/browse');
-  };
-
+  alert('تم حفظ الطلب بنجاح');
+  router.push('/browse');
+};
   // المواد حسب السلك
   const subjectsByCycle = {
     'الابتدائي': ['مزدوج'],
