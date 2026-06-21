@@ -6,7 +6,7 @@ export default function Home() {
     width: '90%',
     margin: '10px auto',
     padding: '15px',
-    backgroundColor: '#FF8C00', // لون برتقالي احترافي
+    backgroundColor: '#FF8C00',
     color: 'white',
     border: 'none',
     borderRadius: '8px',
@@ -18,8 +18,7 @@ export default function Home() {
 
   return (
     <div style={{ textAlign: 'center', marginTop: '20px', fontFamily: 'Arial' }}>
-      
-      {/* الشعار الرسمي */}
+
       <img
         src="/logo.png"
         alt="شعار الوزارة"
@@ -43,7 +42,6 @@ export default function Home() {
         </Link>
       </div>
 
-      {/* ⚠️ تنبيه قانوني (إضافة فقط بدون تغيير التصميم) */}
       <div style={{
         marginTop: '30px',
         padding: '15px',
@@ -57,12 +55,11 @@ export default function Home() {
       }}>
         <h3>⚠️ تنبيه مهم</h3>
         <p>
-          هذا التطبيق مشروع مستقل غير رسمي يهدف فقط لتسهيل تبادل الأساتذة بين الجهات والمديريات،
+          هذا التطبيق مشروع مستقل غير رسمي يهدف فقط لتسهيل تبادل الأساتذة بين الجهات،
           ولا يمثل وزارة التربية الوطنية.
         </p>
       </div>
 
-      {/* 👨‍💻 معلومات المصمم */}
       <div style={{
         marginTop: '20px',
         padding: '15px',
@@ -77,15 +74,14 @@ export default function Home() {
         <p>الأستاذ: أيوب العبوشي</p>
         <p>الجهة: العيون الساقية الحمراء</p>
         <p>المديرية: السمارة</p>
-<p>
-  البريد الإلكتروني:{" "}
-  <a href="mailto:elabbouchiayoubenglish@gmail.com">
-    elabbouchiayoubenglish@gmail.com
-  </a>
-</p>
+        <p>
+          البريد الإلكتروني:{" "}
+          <a href="mailto:elabbouchiayoubenglish@gmail.com">
+            elabbouchiayoubenglish@gmail.com
+          </a>
+        </p>
       </div>
 
-      {/* 🎯 هدف التطبيق */}
       <div style={{
         marginTop: '20px',
         padding: '15px',
@@ -99,7 +95,7 @@ export default function Home() {
       }}>
         <h3>🎯 هدف التطبيق</h3>
         <p>
-          يهدف هذا التطبيق إلى تسهيل عملية تبادل الأساتذة بين الجهات والمديريات والمؤسسات
+          يهدف هذا التطبيق إلى تسهيل عملية تبادل الأساتذة بين الجهات والمديريات،
           بشكل منظم وسريع وشفاف، وتحسين التواصل بين الأساتذة والإدارة.
         </p>
       </div>
