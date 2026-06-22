@@ -34,43 +34,42 @@ export default function Home() {
 
   if (loading) return <div style={{ textAlign: 'center', marginTop: '50px' }}>جاري التحميل...</div>;
 
-  // واجهة تسجيل الدخول
   if (!user) {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#f9f9f9', padding: '20px', fontFamily: 'Arial' }}>
         <div style={{ width: '100%', maxWidth: '400px', padding: '30px', borderRadius: '30px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)', backgroundColor: '#fff', textAlign: 'center' }}>
-          <h2 style={{ color: '#333' }}>مرحباً بك في تبادل</h2>
-          <p style={{ color: '#777', marginBottom: '20px' }}>سجل الدخول للوصول إلى حسابك ومتابعة تبادلك</p>
+          {/* شعار التطبيق في الوسط */}
+          <img src="/logo.png" alt="Logo" style={{ width: '100px', margin: '0 auto 20px auto', display: 'block' }} />
           
+          <h2 style={{ color: '#333', marginTop: '0' }}>مرحباً بك في تبادل</h2>
           <form onSubmit={handleLogin}>
-            <div style={{ position: 'relative', marginBottom: '15px' }}>
-              <span style={{ position: 'absolute', right: '15px', top: '15px' }}>📧</span>
-              <input type="email" placeholder="البريد الإلكتروني" onChange={(e) => setEmail(e.target.value)} style={{ width: '100%', padding: '15px 40px', borderRadius: '15px', border: '1px solid #ddd' }} />
+            <div style={{ marginBottom: '15px' }}>
+              <input type="email" placeholder="البريد الإلكتروني" onChange={(e) => setEmail(e.target.value)} style={{ width: '100%', padding: '15px', borderRadius: '15px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
             </div>
-            <div style={{ position: 'relative', marginBottom: '10px' }}>
-              <span style={{ position: 'absolute', right: '15px', top: '15px' }}>🔒</span>
-              <input type="password" placeholder="كلمة المرور" onChange={(e) => setPassword(e.target.value)} style={{ width: '100%', padding: '15px 40px', borderRadius: '15px', border: '1px solid #ddd' }} />
+            <div style={{ marginBottom: '10px' }}>
+              <input type="password" placeholder="كلمة المرور" onChange={(e) => setPassword(e.target.value)} style={{ width: '100%', padding: '15px', borderRadius: '15px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
             </div>
-            <div style={{ textAlign: 'right', marginBottom: '20px', fontSize: '14px' }}>
-              <label><input type="checkbox" /> تذكرني</label>
-              <span style={{ marginRight: '10px', color: '#FF8C00' }}>نسيت كلمة المرور؟</span>
+            
+            {/* تنسيق تذكرني (يمين) ونسيت كلمة المرور (يسار) */}
+            <div style={{ display: 'flex', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', fontSize: '14px' }}>
+              <label style={{ display: 'flex', alignItems: 'center' }}>
+                <input type="checkbox" style={{ marginRight: '5px' }} /> تذكرني
+              </label>
+              <span style={{ color: '#FF8C00', cursor: 'pointer' }}>نسيت كلمة المرور؟</span>
             </div>
+            
             <button type="submit" style={{ width: '100%', padding: '15px', background: '#FF8C00', color: 'white', border: 'none', borderRadius: '15px', fontWeight: 'bold' }}>دخول ➔</button>
           </form>
           
-          <div style={{ margin: '20px 0', color: '#999' }}>أو</div>
-          
-          <button onClick={handleGoogleLogin} style={{ width: '100%', padding: '10px', backgroundColor: '#fff', border: '1px solid #ddd', borderRadius: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-            <img src="/Google__G__logo.svg" alt="Google" style={{ width: '24px', marginRight: '10px' }} />
+          <button onClick={handleGoogleLogin} style={{ width: '100%', marginTop: '15px', padding: '10px', backgroundColor: '#fff', border: '1px solid #ddd', borderRadius: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+            <img src="/Google__G__logo.svg___.png" alt="Google" style={{ width: '24px', height: '24px', marginLeft: '10px' }} />
             الدخول باستخدام Google
           </button>
-          <p style={{ marginTop: '20px' }}>ليس لديك حساب؟ <span style={{ color: '#FF8C00' }}>إنشاء حساب جديد</span></p>
         </div>
       </div>
     );
   }
 
-  // الواجهة الرئيسية
   return (
     <div style={{ textAlign: 'center', padding: '20px', fontFamily: 'Arial' }}>
       <img src="/logo.png" alt="Logo" style={{ width: '100px', margin: '0 auto 10px auto', display: 'block' }} />
@@ -82,20 +81,26 @@ export default function Home() {
         <Link href="/browse"><button style={{ width: '90%', padding: '15px', background: '#FF8C00', color: 'white', border: 'none', borderRadius: '8px' }}>تصفح الطلبات الحالية</button></Link>
       </div>
 
-      <div style={{ textAlign: 'right', backgroundColor: '#fff3cd', padding: '15px', borderRadius: '8px', marginTop: '20px' }}>
-        ⚠️ تنبيه: هذا التطبيق مشروع مستقل غير رسمي يهدف لتسهيل تبادل الأساتذة، ولا يمثل وزارة التربية الوطنية.
+      {/* الصندوق 1: التنبيه */}
+      <div style={{ textAlign: 'right', backgroundColor: '#fff3cd', padding: '15px', borderRadius: '8px', marginTop: '20px', border: '1px solid #ffeeba', color: '#856404' }}>
+        ⚠️ <strong>تنبيه:</strong> هذا التطبيق مشروع مستقل غير رسمي، يهدف لتسهيل تبادل الأساتذة، ولا يمثل أي جهة حكومية أو وزارة التربية الوطنية.
       </div>
 
-      <div style={{ textAlign: 'right', backgroundColor: '#f0f0f0', padding: '15px', borderRadius: '8px', marginTop: '10px' }}>
-        <p><strong>معلومات المصمم:</strong><br/>
+      {/* الصندوق 2: معلومات المصمم */}
+      <div style={{ textAlign: 'right', backgroundColor: '#f0f0f0', padding: '15px', borderRadius: '8px', marginTop: '10px', border: '1px solid #ddd' }}>
+        <p><strong>👤 معلومات المصمم:</strong><br/>
         الأستاذ: أيوب العبوشي<br/>
-        الجهة: العيون الساقية الحمراء<br/>
-        المديرية: السمارة<br/>
-        البريد الإلكتروني: elabbouchiayoubenglish@gmail.com</p>
-        <p><strong>هدف التطبيق:</strong> يهدف هذا التطبيق إلى تسهيل عملية تبادل الأساتذة بين الجهات والمديريات بشكل منظم وشفاف.</p>
+        الجهة: العيون الساقية الحمراء | المديرية: السمارة<br/>
+        البريد: elabbouchiayoubenglish@gmail.com</p>
       </div>
 
-      <button onClick={() => auth.signOut()} style={{ marginTop: '20px', color: 'red', border: 'none', background: 'none', cursor: 'pointer' }}>تسجيل الخروج</button>
+      {/* الصندوق 3: هدف التطبيق */}
+      <div style={{ textAlign: 'right', backgroundColor: '#e3f2fd', padding: '15px', borderRadius: '8px', marginTop: '10px', border: '1px solid #bbdefb', color: '#0c5460' }}>
+        <p><strong>🎯 هدف التطبيق:</strong><br/>
+        تسهيل عملية تبادل الأساتذة بين الجهات والمديريات بشكل منظم، سريع، وشفاف، وتحسين التواصل المباشر بين الراغبين في الانتقال.</p>
+      </div>
+
+      <button onClick={() => auth.signOut()} style={{ marginTop: '30px', color: 'red', border: 'none', background: 'none', cursor: 'pointer', textDecoration: 'underline' }}>تسجيل الخروج</button>
     </div>
   );
 }
