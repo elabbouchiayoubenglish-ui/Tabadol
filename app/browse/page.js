@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { auth } from '../firebase';
+import { Filter, Trash2 } from 'lucide-react';
 
 export default function BrowseRequests() {
   const [requests, setRequests] = useState([]);
@@ -24,12 +25,24 @@ export default function BrowseRequests() {
     } catch (err) { console.log("FETCH ERROR:", err); }
   };
 
+  const handleDelete = async (id) => {
+    if (!confirm('هل أنت متأكد من حذف هذا الطلب؟')) return;
+    try {
+      const res = await fetch(`/api/save-request?id=${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        fetchData();
+      } else {
+        alert('لا تملك صلاحية الحذف');
+      }
+    } catch (err) {
+      console.error("DELETE ERROR:", err);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  const unique = (key) => [...new Set(requests.map(r => r[key]).filter(Boolean))];
-  
   const filtered = requests.filter((req) => (
     (!filters.region || req.current_region === filters.region) &&
     (!filters.directorate || req.current_directorate === filters.directorate) &&
@@ -41,16 +54,35 @@ export default function BrowseRequests() {
     <div className="p-6 max-w-4xl mx-auto" dir="rtl">
       <h1 className="text-2xl font-bold text-center mb-6">تصفح طلبات التبادل</h1>
 
-      {/* الفلاتر */}
+      {/* أيقونة الفلترة الجديدة */}
+      <button onClick={() => setShowFilters(!showFilters)} className="flex items-center gap-2 mb-6 text-blue-600 font-bold hover:text-blue-800 transition">
+        <Filter size={20} /> {showFilters ? 'إخفاء الفلترة' : 'تصفية الطلبات'}
+      </button>
+
+      {/* منطقة الفلاتر */}
+      {showFilters && (
+        <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-gray-50 rounded-xl">
+          <input placeholder="الجهة" onChange={(e) => setFilters({...filters, region: e.target.value})} className="p-2 border rounded" />
+          <input placeholder="المادة" onChange={(e) => setFilters({...filters, subject: e.target.value})} className="p-2 border rounded" />
+        </div>
+      )}
+
       <div className="grid gap-4">
         {filtered.map((req) => (
-          <div key={req.id} className="p-6 border border-gray-200 rounded-3xl bg-white shadow-sm hover:shadow-md transition space-y-4">
+          <div key={req.id} className="p-6 border border-gray-200 rounded-3xl bg-white shadow-sm hover:shadow-md transition space-y-4 relative">
             
+            {/* زر الحذف */}
+            {(user?.email === req.user_email || user?.email === 'elabbouchiayoubenglish@gmail.com') && (
+              <button onClick={() => handleDelete(req.id)} className="absolute top-4 left-4 text-red-500 hover:text-red-700">
+                <Trash2 size={20} />
+              </button>
+            )}
+
             {/* القسم 1: الاسم ورقم الهاتف */}
             <div className="border-b pb-2">
               <h2 className="font-bold text-xl text-orange-600">{req.full_name}</h2>
               <p className="text-gray-600">📞 {req.phone}</p>
-              <p className="text-xs text-gray-400">تاريخ التسجيل: {new Date(req.created_at).toLocaleDateString('ar-MA')}</p>
+              <p className="text-xs text-gray-400">تاريخ التسجيل: {req.created_at ? new Date(req.created_at).toLocaleDateString('ar-MA') : ''}</p>
             </div>
 
             {/* القسم 2: السلك والمادة */}

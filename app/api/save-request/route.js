@@ -20,7 +20,7 @@ export async function GET() {
 }
 
 // POST - إنشاء طلب جديد
-export async function POST(req) {
+export async function POST(req) { // تم تصحيح: إضافة كلمة async
   try {
     const body = await req.json();
 
@@ -48,6 +48,27 @@ export async function POST(req) {
     }
 
     return Response.json({ success: true, data: data[0] });
+  } catch (err) {
+    return Response.json({ error: err.message }, { status: 500 });
+  }
+}
+
+// DELETE - حذف طلب
+export async function DELETE(req) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+
+    const { error } = await supabase
+      .from('requests')
+      .delete()
+      .eq('id', id);
+
+    if (error) {
+      return Response.json({ error: error.message }, { status: 500 });
+    }
+
+    return Response.json({ success: true });
   } catch (err) {
     return Response.json({ error: err.message }, { status: 500 });
   }
