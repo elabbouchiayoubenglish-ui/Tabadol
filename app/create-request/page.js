@@ -35,31 +35,39 @@ export default function CreateRequest() {
   const targetRaw = schoolsData?.[targetRegion]?.[targetDirectorate];
   const targetInstitutions = targetRaw?.[cycleMap[selectedCycle]] || [];
 
-  // ✅ التصحيح: إضافة البريد الإلكتروني هنا
+  // ✅ التصحيح: إضافة البريد الإلكتروني هن
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!auth.currentUser) {
       alert("يجب تسجيل الدخول أولاً لإنشاء طلب");
       return;
     }
 
+    const dataToSend = {
+      full_name: formData.name,
+      phone: formData.phone,
+      level: formData.cycle,
+      subject: formData.subject,
+      current_region: selectedRegion,
+      current_directorate: selectedDirectorate,
+      current_school: formData.curSchool,
+      desired_region: targetRegion,
+      desired_directorate: targetDirectorate,
+      desired_school: formData.targetSchool,
+      email: auth.currentUser.email
+    };
+
     await fetch('/api/save-request', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...formData,
-        region: selectedRegion,
-        directorate: selectedDirectorate,
-        targetRegion: targetRegion,
-        targetDirectorate: targetDirectorate,
-        email: auth.currentUser.email // إرسال الإيميل ليتم حفظه في قاعدة البيانات
-      })
+      body: JSON.stringify(dataToSend)
     });
 
     alert('تم حفظ الطلب بنجاح');
     router.push('/browse');
   };
+
 
   const subjectsByCycle = {
     'الابتدائي': ['مزدوج'],
