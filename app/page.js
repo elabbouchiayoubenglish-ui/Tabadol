@@ -1,9 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { auth } from '../firebase';
-import { 
-  onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword 
-} from "firebase/auth";
+import { auth } from './firebase';
+import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
 import Link from 'next/link';
 
 export default function Home() {
@@ -11,7 +9,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // جديدة
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -41,13 +39,13 @@ export default function Home() {
         <div style={{ width: '100%', maxWidth: '400px', padding: '30px', borderRadius: '30px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)', backgroundColor: '#fff', textAlign: 'center' }}>
           <img src="/logo.png" alt="Logo" style={{ width: '100px', margin: '0 auto 20px auto', display: 'block' }} />
           <h2 style={{ color: '#333', marginTop: '0' }}>مرحباً بك في تبادل</h2>
-          
+
           <form onSubmit={handleLogin}>
             <div style={{ position: 'relative', marginBottom: '15px' }}>
               <span style={{ position: 'absolute', right: '15px', top: '15px' }}>📧</span>
               <input type="email" placeholder="البريد الإلكتروني" onChange={(e) => setEmail(e.target.value)} style={{ width: '100%', padding: '15px 40px', borderRadius: '15px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
             </div>
-            
+
             <div style={{ position: 'relative', marginBottom: '10px' }}>
               <span style={{ position: 'absolute', right: '15px', top: '15px' }}>🔒</span>
               <input type={showPassword ? "text" : "password"} placeholder="كلمة المرور" onChange={(e) => setPassword(e.target.value)} style={{ width: '100%', padding: '15px 40px', borderRadius: '15px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
@@ -60,14 +58,14 @@ export default function Home() {
               <label style={{ display: 'flex', alignItems: 'center' }}><input type="checkbox" style={{ marginRight: '5px' }} /> تذكرني</label>
               <span style={{ color: '#FF8C00', cursor: 'pointer' }}>نسيت كلمة المرور؟</span>
             </div>
-            
+
             <button type="submit" style={{ width: '100%', padding: '15px', background: '#FF8C00', color: 'white', border: 'none', borderRadius: '15px', fontWeight: 'bold' }}>دخول ➔</button>
           </form>
 
           <div style={{ marginTop: '20px', fontSize: '14px' }}>
             ليس لديك حساب؟ <Link href="/register" style={{ color: '#FF8C00', fontWeight: 'bold' }}>إنشاء حساب جديد</Link>
           </div>
-          
+
           <button onClick={handleGoogleLogin} style={{ width: '100%', marginTop: '15px', padding: '10px', backgroundColor: '#fff', border: '1px solid #ddd', borderRadius: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
             <img src="/Google__G__logo.svg___.png" alt="Google" style={{ width: '24px', height: '24px', marginLeft: '10px' }} />
             الدخول باستخدام Google
@@ -82,7 +80,7 @@ export default function Home() {
       <img src="/logo.png" alt="Logo" style={{ width: '100px', margin: '0 auto 10px auto', display: 'block' }} />
       <h2 style={{ fontSize: '18px' }}>وزارة التربية الوطنية والتعليم الأولي والرياضة</h2>
       <h3 style={{ fontSize: '16px' }}>تطبيق تبادل - منصة تدبير طلبات الانتقال</h3>
-      
+
       <div style={{ marginTop: '20px' }}>
         <Link href="/create-request"><button style={{ width: '90%', padding: '15px', marginBottom: '10px', background: '#FF8C00', color: 'white', border: 'none', borderRadius: '8px' }}>إنشاء طلب تبادل جديد</button></Link>
         <Link href="/browse"><button style={{ width: '90%', padding: '15px', background: '#FF8C00', color: 'white', border: 'none', borderRadius: '8px' }}>تصفح الطلبات الحالية</button></Link>
