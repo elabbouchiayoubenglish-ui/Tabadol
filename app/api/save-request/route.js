@@ -40,6 +40,9 @@ export async function POST(req) {
           desired_region: body.targetRegion,
           desired_directorate: body.targetDirectorate,
           desired_school: body.targetSchool,
+          
+          // إضافة البريد الإلكتروني للمستخدم هنا
+          user_email: body.email, 
 
           created_at: new Date().toISOString()
         }
