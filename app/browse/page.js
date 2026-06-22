@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { auth } from '../firebase';
-
+import { auth } from '../firebase'; 
 export default function BrowseRequests() {
   const [requests, setRequests] = useState([]);
   const [user, setUser] = useState(null);

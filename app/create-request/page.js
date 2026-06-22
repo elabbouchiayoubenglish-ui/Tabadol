@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { auth } from '../firebase'; // تأكد من استيراد auth
+import { auth } from '../firebase';
 
 export default function CreateRequest() {
   const router = useRouter();
