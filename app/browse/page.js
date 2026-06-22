@@ -43,6 +43,9 @@ export default function BrowseRequests() {
     fetchData();
   }, []);
 
+  // دالة لاستخراج القيم الفريدة للقوائم المنسدلة
+  const getUniqueValues = (key) => [...new Set(requests.map(req => req[key]).filter(Boolean))];
+
   const filtered = requests.filter((req) => (
     (!filters.region || req.current_region === filters.region) &&
     (!filters.directorate || req.current_directorate === filters.directorate) &&
@@ -54,16 +57,30 @@ export default function BrowseRequests() {
     <div className="p-6 max-w-4xl mx-auto" dir="rtl">
       <h1 className="text-2xl font-bold text-center mb-6">تصفح طلبات التبادل</h1>
 
-      {/* أيقونة الفلترة الجديدة */}
+      {/* أيقونة الفلترة */}
       <button onClick={() => setShowFilters(!showFilters)} className="flex items-center gap-2 mb-6 text-blue-600 font-bold hover:text-blue-800 transition">
         <Filter size={20} /> {showFilters ? 'إخفاء الفلترة' : 'تصفية الطلبات'}
       </button>
 
-      {/* منطقة الفلاتر */}
+      {/* منطقة الفلاتر (القوائم المنسدلة) */}
       {showFilters && (
-        <div className="grid grid-cols-2 gap-4 mb-6 p-4 bg-gray-50 rounded-xl">
-          <input placeholder="الجهة" onChange={(e) => setFilters({...filters, region: e.target.value})} className="p-2 border rounded" />
-          <input placeholder="المادة" onChange={(e) => setFilters({...filters, subject: e.target.value})} className="p-2 border rounded" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-gray-50 rounded-xl">
+          <select onChange={(e) => setFilters({...filters, region: e.target.value})} className="p-2 border rounded">
+            <option value="">كل الجهات</option>
+            {getUniqueValues('current_region').map(val => <option key={val} value={val}>{val}</option>)}
+          </select>
+          <select onChange={(e) => setFilters({...filters, directorate: e.target.value})} className="p-2 border rounded">
+            <option value="">كل المديريات</option>
+            {getUniqueValues('current_directorate').map(val => <option key={val} value={val}>{val}</option>)}
+          </select>
+          <select onChange={(e) => setFilters({...filters, cycle: e.target.value})} className="p-2 border rounded">
+            <option value="">كل الأسلاك</option>
+            {getUniqueValues('level').map(val => <option key={val} value={val}>{val}</option>)}
+          </select>
+          <select onChange={(e) => setFilters({...filters, subject: e.target.value})} className="p-2 border rounded">
+            <option value="">كل المواد</option>
+            {getUniqueValues('subject').map(val => <option key={val} value={val}>{val}</option>)}
+          </select>
         </div>
       )}
 
