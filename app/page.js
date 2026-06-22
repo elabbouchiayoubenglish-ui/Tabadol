@@ -7,6 +7,7 @@ import {
   GoogleAuthProvider, 
   signInWithEmailAndPassword 
 } from "firebase/auth";
+import Link from 'next/link';
 
 export default function Home() {
   const [user, setUser] = useState(null);
@@ -34,33 +35,45 @@ export default function Home() {
     catch (error) { alert("خطأ: " + error.message); }
   };
 
-  if (loading) return <div style={{ textAlign: 'center', marginTop: '50px', color: '#555' }}>جاري التحقق...</div>;
+  if (loading) return <div style={{ textAlign: 'center', marginTop: '100px', fontSize: '18px' }}>جاري تحميل تبادل...</div>;
 
+  // --- واجهة تسجيل الدخول الاحترافية باللون البرتقالي ---
   if (!user) {
     return (
-      <div style={{ maxWidth: '400px', margin: '50px auto', padding: '30px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)', borderRadius: '15px', textAlign: 'center', fontFamily: 'sans-serif' }}>
-        <h1 style={{ color: '#333' }}>أهلاً بك في تبادل</h1>
-        <p style={{ color: '#777', marginBottom: '20px' }}>سجل الدخول للبدء</p>
-        
-        <form onSubmit={handleEmailLogin}>
-          <input type="email" placeholder="البريد الإلكتروني" value={email} onChange={(e) => setEmail(e.target.value)} style={{ width: '100%', padding: '12px', margin: '8px 0', borderRadius: '8px', border: '1px solid #ccc' }} />
-          <input type="password" placeholder="كلمة المرور" value={password} onChange={(e) => setPassword(e.target.value)} style={{ width: '100%', padding: '12px', margin: '8px 0', borderRadius: '8px', border: '1px solid #ccc' }} />
-          <button type="submit" style={{ width: '100%', padding: '12px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', marginTop: '10px' }}>دخول بالبريد</button>
-        </form>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundColor: '#f9f9f9', padding: '20px' }}>
+        <div style={{ width: '100%', maxWidth: '420px', backgroundColor: '#fff', padding: '40px', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.08)', textAlign: 'center' }}>
+          <h1 style={{ color: '#FF8C00', marginBottom: '10px' }}>مرحباً بك في تبادل</h1>
+          <p style={{ color: '#666', marginBottom: '30px' }}>سجل الدخول للمتابعة</p>
+          
+          <form onSubmit={handleEmailLogin}>
+            <input type="email" placeholder="البريد الإلكتروني" value={email} onChange={(e) => setEmail(e.target.value)} style={{ width: '100%', padding: '14px', margin: '10px 0', borderRadius: '12px', border: '1.5px solid #eee', outline: 'none' }} />
+            <input type="password" placeholder="كلمة المرور" value={password} onChange={(e) => setPassword(e.target.value)} style={{ width: '100%', padding: '14px', margin: '10px 0', borderRadius: '12px', border: '1.5px solid #eee', outline: 'none' }} />
+            <button type="submit" style={{ width: '100%', padding: '14px', backgroundColor: '#FF8C00', color: 'white', border: 'none', borderRadius: '12px', cursor: 'pointer', fontSize: '16px', fontWeight: 'bold', marginTop: '10px', transition: '0.3s' }}>دخول</button>
+          </form>
 
-        <div style={{ margin: '20px 0', color: '#999' }}>أو</div>
-        
-        <button onClick={handleGoogleLogin} style={{ width: '100%', padding: '12px', backgroundColor: '#4285F4', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>
-          تسجيل الدخول بـ Google
-        </button>
+          <div style={{ margin: '25px 0', color: '#ccc', display: 'flex', alignItems: 'center' }}><hr style={{ flex: 1 }}/> أو <hr style={{ flex: 1 }}/></div>
+          
+          <button onClick={handleGoogleLogin} style={{ width: '100%', padding: '14px', backgroundColor: '#fff', color: '#333', border: '1.5px solid #ddd', borderRadius: '12px', cursor: 'pointer', fontSize: '16px', transition: '0.3s' }}>
+            تسجيل الدخول عبر Google
+          </button>
+        </div>
       </div>
     );
   }
 
+  // --- واجهة المستخدم الأصلية ---
   return (
-    <div style={{ textAlign: 'center', marginTop: '50px', fontFamily: 'sans-serif' }}>
+    <div style={{ textAlign: 'center', marginTop: '50px', fontFamily: 'Arial' }}>
       <h1>مرحباً أستاذ {user.displayName || user.email}</h1>
-      <button onClick={() => auth.signOut()} style={{ marginTop: '20px', padding: '10px 20px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>تسجيل الخروج</button>
+      <div style={{ marginTop: '30px' }}>
+        <Link href="/create-request">
+          <button style={{ display: 'block', width: '90%', margin: '10px auto', padding: '15px', backgroundColor: '#FF8C00', color: 'white', border: 'none', borderRadius: '8px' }}>إنشاء طلب جديد</button>
+        </Link>
+        <Link href="/browse">
+          <button style={{ display: 'block', width: '90%', margin: '10px auto', padding: '15px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '8px' }}>تصفح الطلبات</button>
+        </Link>
+      </div>
+      <button onClick={() => auth.signOut()} style={{ marginTop: '20px', color: 'red', border: 'none', background: 'none', cursor: 'pointer' }}>تسجيل الخروج</button>
     </div>
   );
 }
