@@ -11,7 +11,7 @@ export default function LoginButton() {
         provider: 'google',
         options: {
           // هذا الرابط يخبر Supabase أين يعود بعد تسجيل الدخول
-          redirectTo: 'https://tabadolgit.vercel.app' 
+          redirectTo: 'com.ayoub.tabadol://callback' 
         }
       });
 
