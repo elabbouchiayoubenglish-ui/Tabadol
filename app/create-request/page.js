@@ -35,11 +35,13 @@ export default function CreateRequest() {
   const targetRaw = schoolsData?.[targetRegion]?.[targetDirectorate];
   const targetInstitutions = targetRaw?.[cycleMap[selectedCycle]] || [];
 
-  // ✅ التصحيح: إضافة البريد الإلكتروني هن
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!auth.currentUser) {
+    // تصحيح: جلب بيانات المستخدم الصحيحة من Supabase
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
       alert("يجب تسجيل الدخول أولاً لإنشاء طلب");
       return;
     }
@@ -55,19 +57,22 @@ export default function CreateRequest() {
       desired_region: targetRegion,
       desired_directorate: targetDirectorate,
       desired_school: formData.targetSchool,
-      email: auth.currentUser.email
+      email: user.email 
     };
 
-    await fetch('/api/save-request', {
+    const response = await fetch('/api/save-request', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dataToSend)
     });
 
-    alert('تم حفظ الطلب بنجاح');
-    router.push('/browse');
+    if (response.ok) {
+        alert('تم حفظ الطلب بنجاح');
+        router.push('/browse');
+    } else {
+        alert('حدث خطأ أثناء حفظ الطلب، يرجى المحاولة لاحقاً');
+    }
   };
-
 
   const subjectsByCycle = {
     'الابتدائي': ['مزدوج'],
