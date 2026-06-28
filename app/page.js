@@ -1,7 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { auth } from './firebase';
-import { onAuthStateChanged, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
+import { supabase } from './lib/supabaseClient';
 import Link from 'next/link';
 
 export default function Home() {
@@ -12,23 +11,34 @@ export default function Home() {
   const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+    const getSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      setUser(data.session?.user || null);
       setLoading(false);
+    };
+    getSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
     });
-    return () => unsubscribe();
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try { await signInWithEmailAndPassword(auth, email, password); }
-    catch (error) { alert("خطأ: " + error.message); }
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) alert("خطأ: " + error.message);
   };
 
   const handleGoogleLogin = async () => {
-    const provider = new GoogleAuthProvider();
-    try { await signInWithPopup(auth, provider); }
-    catch (error) { alert("خطأ: " + error.message); }
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: 'io.ionic.starter://callback'
+      },
+    });
+    if (error) alert("خطأ: " + error.message);
   };
 
   if (loading) return <div style={{ textAlign: 'center', marginTop: '50px' }}>جاري التحميل...</div>;
@@ -45,7 +55,6 @@ export default function Home() {
               <span style={{ position: 'absolute', right: '15px', top: '15px' }}>📧</span>
               <input type="email" placeholder="البريد الإلكتروني" onChange={(e) => setEmail(e.target.value)} style={{ width: '100%', padding: '15px 40px', borderRadius: '15px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
             </div>
-
             <div style={{ position: 'relative', marginBottom: '10px' }}>
               <span style={{ position: 'absolute', right: '15px', top: '15px' }}>🔒</span>
               <input type={showPassword ? "text" : "password"} placeholder="كلمة المرور" onChange={(e) => setPassword(e.target.value)} style={{ width: '100%', padding: '15px 40px', borderRadius: '15px', border: '1px solid #ddd', boxSizing: 'border-box' }} />
@@ -53,12 +62,6 @@ export default function Home() {
                 {showPassword ? "إخفاء" : "عرض"}
               </span>
             </div>
-
-            <div style={{ display: 'flex', flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', fontSize: '14px' }}>
-              <label style={{ display: 'flex', alignItems: 'center' }}><input type="checkbox" style={{ marginRight: '5px' }} /> تذكرني</label>
-              <span style={{ color: '#FF8C00', cursor: 'pointer' }}>نسيت كلمة المرور؟</span>
-            </div>
-
             <button type="submit" style={{ width: '100%', padding: '15px', background: '#FF8C00', color: 'white', border: 'none', borderRadius: '15px', fontWeight: 'bold' }}>دخول ➔</button>
           </form>
 
@@ -80,29 +83,24 @@ export default function Home() {
       <img src="/logo.png" alt="Logo" style={{ width: '100px', margin: '0 auto 10px auto', display: 'block' }} />
       <h2 style={{ fontSize: '18px' }}>وزارة التربية الوطنية والتعليم الأولي والرياضة</h2>
       <h3 style={{ fontSize: '16px' }}>تطبيق تبادل - منصة تدبير طلبات الانتقال</h3>
-
       <div style={{ marginTop: '20px' }}>
         <Link href="/create-request"><button style={{ width: '90%', padding: '15px', marginBottom: '10px', background: '#FF8C00', color: 'white', border: 'none', borderRadius: '8px' }}>إنشاء طلب تبادل جديد</button></Link>
         <Link href="/browse"><button style={{ width: '90%', padding: '15px', background: '#FF8C00', color: 'white', border: 'none', borderRadius: '8px' }}>تصفح الطلبات الحالية</button></Link>
       </div>
-
       <div style={{ textAlign: 'right', backgroundColor: '#fff3cd', padding: '15px', borderRadius: '8px', marginTop: '20px', border: '1px solid #ffeeba', color: '#856404' }}>
         ⚠️ <strong>تنبيه:</strong> هذا التطبيق مشروع مستقل غير رسمي، يهدف لتسهيل تبادل الأساتذة، ولا يمثل أي جهة حكومية أو وزارة التربية الوطنية.
       </div>
-
       <div style={{ textAlign: 'right', backgroundColor: '#f0f0f0', padding: '15px', borderRadius: '8px', marginTop: '10px', border: '1px solid #ddd' }}>
-        <p><strong>👤 معلومات المصمم:</strong><br/>
+        <p><strong>👤 معلومات المطوّر:</strong><br/>
         الأستاذ: أيوب العبوشي<br/>
         الجهة: العيون الساقية الحمراء | المديرية: السمارة<br/>
         البريد: elabbouchiayoubenglish@gmail.com</p>
       </div>
-
       <div style={{ textAlign: 'right', backgroundColor: '#e3f2fd', padding: '15px', borderRadius: '8px', marginTop: '10px', border: '1px solid #bbdefb', color: '#0c5460' }}>
         <p><strong>🎯 هدف التطبيق:</strong><br/>
         تسهيل عملية تبادل الأساتذة بين الجهات والمديريات بشكل منظم، سريع، وشفاف، وتحسين التواصل المباشر بين الراغبين في الانتقال.</p>
       </div>
-
-      <button onClick={() => auth.signOut()} style={{ marginTop: '30px', color: 'red', border: 'none', background: 'none', cursor: 'pointer', textDecoration: 'underline' }}>تسجيل الخروج</button>
+      <button onClick={() => supabase.auth.signOut()} style={{ marginTop: '30px', color: 'red', border: 'none', background: 'none', cursor: 'pointer', textDecoration: 'underline' }}>تسجيل الخروج</button>
     </div>
   );
 }

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Tabadol</string>
+    <string name="title_activity_main">Tabadol</string>
+    <string name="package_name">com.ayoub.tabadol</string>
+    <string name="custom_url_scheme">com.ayoub.tabadol</string>
+</resources>

@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { auth } from '../firebase';
 import { Filter, Trash2 } from 'lucide-react';
+import { supabase } from '../lib/supabaseClient';
 
 export default function BrowseRequests() {
   const [requests, setRequests] = useState([]);
@@ -9,9 +9,18 @@ export default function BrowseRequests() {
   const [filters, setFilters] = useState({ region: '', directorate: '', cycle: '', subject: '' });
   const [showFilters, setShowFilters] = useState(false);
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((currentUser) => setUser(currentUser));
-    return () => unsubscribe();
+ useEffect(() => {
+    const getSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      setUser(data.session?.user || null);
+    };
+    getSession();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const fetchData = async () => {

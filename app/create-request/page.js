@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { auth } from '../firebase';
+import { supabase } from '../lib/supabaseClient';
 
 export default function CreateRequest() {
   const router = useRouter();

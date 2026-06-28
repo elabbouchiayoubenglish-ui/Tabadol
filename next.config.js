@@ -1,13 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config) => {
-    config.watchOptions = { ignored: /.*/ };
-    return config;
+  output: 'export',
+  images: {
+    unoptimized: true,
   },
-  // هذا السطر يخبر Next.js 16 أننا نعرف وجود Turbopack
-  experimental: {
-    turbopack: {}
-  }
-};
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

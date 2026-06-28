@@ -1,9 +1,8 @@
 'use client';
 import { useState } from 'react';
-import { auth } from '../firebase';
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { supabase } from '../lib/supabaseClient';
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -13,7 +12,8 @@ export default function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+const { error } = await supabase.auth.signUp({ email, password });
+if (error) throw error;
       alert("تم إنشاء الحساب بنجاح!");
       router.push('/');
     } catch (error) {
