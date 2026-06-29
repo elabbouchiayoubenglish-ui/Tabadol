@@ -10,6 +10,7 @@ export default function Home() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+const [rememberMe, setRememberMe] = useState(false);
 
   useEffect(() => {
     const getSession = async () => {
@@ -52,7 +53,19 @@ export default function Home() {
               <input type={showPassword ? "text" : "password"} placeholder="كلمة المرور" onChange={(e) => setPassword(e.target.value)} style={{ width: '100%', padding: '15px 50px', borderRadius: '15px', border: '1px solid #ddd', boxSizing: 'border-box' }} required />
               <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', left: '15px', top: '15px', background: 'none', border: 'none', cursor: 'pointer', color: '#888' }}><Eye size={20} /></button>
             </div>
-            <Link href="/forgot-password" style={{ display: 'block', fontSize: '13px', marginBottom: '15px', color: '#FF8C00' }}>نسيت كلمة المرور؟</Link>
+
+            {/* إضافة خيار تذكرني مع رابط نسيت كلمة المرور */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px', fontSize: '13px' }}>
+              <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                <input 
+                  type="checkbox" 
+                  checked={rememberMe} 
+                  onChange={(e) => setRememberMe(e.target.checked)} 
+                /> 
+                تذكرني
+              </label>
+              <Link href="/forgot-password" style={{ color: '#FF8C00' }}>نسيت كلمة المرور؟</Link>
+            </div>
             <button type="submit" style={{ width: '100%', padding: '15px', background: '#FF8C00', color: 'white', border: 'none', borderRadius: '15px', fontWeight: 'bold' }}>دخول ➔</button>
           </form>
           {/* زر Google */}
